@@ -1,0 +1,3 @@
+[submodule "UnderwaterAdventure/Assets/RPG"]
+	path = UnderwaterAdventure/Assets/RPG
+	url = https://github.com/oohicksyoo/RPG-Framework.git
