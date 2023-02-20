@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using RPG.View;
+using RPG.View.Attributes;
+using UnityEngine.UI;
+using RPG.Nodes;
+using RPG.Application;
+
+namespace Project.Views {
+    public class MainMenuView : ViewBase {
+
+        [SerializeField]
+        private Button continueButton;
+
+        #region XNode
+
+        [ViewOutput]
+        public EmptyNode ContinueNode {
+            get;
+            set;
+        }
+
+        #endregion
+
+        public override void CleanupButtonListeners() {
+            continueButton.onClick.RemoveAllListeners();
+        }
+
+        public override void SetupButtonListeners() {
+            continueButton.onClick.AddListener(() => {
+                OnProcessNode("ContinueNode");
+            });
+        }
+    }
+}
