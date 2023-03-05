@@ -13,32 +13,14 @@ public class PlayerStatsUI : MonoBehaviour
     [SerializeField]
     private int totalPoints;
 
-    [Header("Speed")]
     [SerializeField]
-    private Button speedPlusButton;
-
-    [SerializeField]
-    private Button speedMinusButton;
+    private Text pointsRemainingText;
 
     [SerializeField]
     private Text speedText;
 
-    [Header("Claw Size")]
-    [SerializeField]
-    private Button clawSizePlusButton;
-
-    [SerializeField]
-    private Button clawSizeMinusButton;
-
     [SerializeField]
     private Text clawSizeText;
-
-    [Header("Claw Power")]
-    [SerializeField]
-    private Button clawPowerPlusButton;
-
-    [SerializeField]
-    private Button clawPowerMinusButton;
 
     [SerializeField]
     private Text clawPowerText;
@@ -67,13 +49,23 @@ public class PlayerStatsUI : MonoBehaviour
         get;
         set;
     }
+
+    #endregion
+
+
+    #region Mono Behaviours
+
+    public void Start() {
+        this.PointsRemainging = totalPoints;
+    }
+
     #endregion
 
 
     #region Public Methods
 
     public void IncreaseSpeed() {
-        if (this.PointsRemainging == totalPoints) {
+        if (this.PointsRemainging == 0) {
             return;
         }
         this.Speed++;
@@ -82,12 +74,48 @@ public class PlayerStatsUI : MonoBehaviour
     }
 
     public void DecreaseSpeed() {
-        if (this.PointsRemainging == 0) {
+        if (this.PointsRemainging == -totalPoints || this.Speed == -totalPoints) {
             return;
         }
         this.Speed--;
         this.PointsRemainging++;
         UpdateSpeedText();
+    }
+
+    public void IncreaseClawSize() {
+        if (this.PointsRemainging == 0) {
+            return;
+        }
+        this.ClawSize++;
+        this.PointsRemainging--;
+        UpdateClawSizeText();
+    }
+
+    public void DecreaseClawSize() {
+        if (this.PointsRemainging == -totalPoints || this.ClawSize == -totalPoints) {
+            return;
+        }
+        this.ClawSize--;
+        this.PointsRemainging++;
+        UpdateClawSizeText();
+    }
+
+    public void IncreaseClawPower() {
+        if (this.PointsRemainging == 0) {
+            return;
+        }
+        this.ClawPower++;
+        this.PointsRemainging--;
+        UpdateClawPowerText();
+    }
+
+    public void DecreaseClawPower() {
+        if (this.PointsRemainging == -totalPoints || this.ClawPower == -totalPoints) {
+            return;
+        }
+        this.ClawPower--;
+        this.PointsRemainging++;
+        UpdateClawPowerText();
     }
 
     #endregion
@@ -97,6 +125,16 @@ public class PlayerStatsUI : MonoBehaviour
 
     public void UpdateSpeedText() {
         speedText.text = this.Speed.ToString();
+        pointsRemainingText.text = "Points Remaining: " + this.PointsRemainging.ToString();
+    }
+
+    public void UpdateClawSizeText() {
+        clawSizeText.text = this.ClawSize.ToString();
+        pointsRemainingText.text = "Points Remaining: " + this.PointsRemainging.ToString();
+    }
+    public void UpdateClawPowerText() {
+        clawPowerText.text = this.ClawPower.ToString();
+        pointsRemainingText.text = "Points Remaining: " + this.PointsRemainging.ToString();
     }
 
     #endregion
