@@ -15,6 +15,9 @@ namespace Project.Components {
         [SerializeField]
         private GroundColliderComponent groundColliderComponent;
 
+		[SerializeField]
+		private float airRotationSpeed = 10f;
+
         [SerializeField]
         private Transform[] legTargets;
 
@@ -95,7 +98,9 @@ namespace Project.Components {
         void FixedUpdate() {
 
             if (!groundColliderComponent.IsGrounded) {
-                return;
+				Quaternion rotation = Quaternion.Euler(0f, 0f, rb.velocity.x * -airRotationSpeed * Time.deltaTime);
+				ClampRotation(rotation);
+				return;
             }
             velocity = rb.velocity / 100f;
 
@@ -144,16 +149,7 @@ namespace Project.Components {
                 Vector3 up = Vector3.Lerp(lastBodyUp, normal, 1f / (float)(smoothness*2));
                 transform.up = up;
                 Quaternion rotation = Quaternion.LookRotation(transform.parent.forward, up);;
-                Vector3 playerEulerAngles = rotation.eulerAngles;
-
-                if(playerEulerAngles.z > 180) {
-                    playerEulerAngles.z -= 360f;
-                }
-                else {
-                    playerEulerAngles.z = playerEulerAngles.z;
-                }
-                playerEulerAngles.z = Mathf.Clamp(playerEulerAngles.z, -15f, 15f);
-                transform.rotation = Quaternion.Euler(playerEulerAngles);
+				ClampRotation(rotation);
                 lastBodyUp = transform.up;
             }
         }
@@ -166,5 +162,18 @@ namespace Project.Components {
                 Gizmos.DrawWireSphere(transform.TransformPoint(defaultLegPositions[i]), stepSize);
             }
         }
+
+		private void ClampRotation(Quaternion rotation) {
+			Vector3 playerEulerAngles = rotation.eulerAngles;
+
+			if (playerEulerAngles.z > 180) {
+				playerEulerAngles.z -= 360f;
+			}
+			else {
+				playerEulerAngles.z = playerEulerAngles.z;
+			}
+			playerEulerAngles.z = Mathf.Clamp(playerEulerAngles.z, -15f, 15f);
+			transform.rotation = Quaternion.Euler(playerEulerAngles);
+		}
     }
 }
