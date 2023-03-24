@@ -14,6 +14,9 @@ namespace Project.Components
         private Rigidbody2D rb;
 
         [SerializeField]
+        private GroundColliderComponent groundColliderComponent;
+
+        [SerializeField]
         private float moveSpeed;
 
         [SerializeField]
@@ -31,12 +34,6 @@ namespace Project.Components
         } = true;
 
         public float Horizontal
-        {
-            get;
-            set;
-        }
-
-        public bool IsGrounded
         {
             get;
             set;
@@ -86,6 +83,7 @@ namespace Project.Components
 
         #endregion
 
+
         #region Public Methods
 
         public void OnMove(InputAction.CallbackContext context)
@@ -103,7 +101,7 @@ namespace Project.Components
             {
                 return;
             }
-            if (this.IsGrounded)
+            if (groundColliderComponent.IsGrounded)
             {
                 if (context.performed)
                 {

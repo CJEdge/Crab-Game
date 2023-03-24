@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: b86910aff8a717447a1d5d6e8456e764
+guid: 07a27c6c41417d345af2b30d0e73dffa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 315393741751519643
-    second: Crab_Head_0
+      213: -4930369570977921858
+    second: Crab_Smile_0
   - first:
-      213: -4656385816827910881
-    second: Crab_Head_1
+      213: -9071616284024053786
+    second: Crab_Smile_1
+  - first:
+      213: 4061252567771255479
+    second: Crab_Smile_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -93,29 +96,17 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Crab_Head_0
+      name: Crab_Smile_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1084
-        height: 649
+        y: 371
+        width: 162
+        height: 151
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,8 +114,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b990b75efe0806400800000000000000
-      internalID: 315393741751519643
+      spriteID: eb447765ffec39bb0800000000000000
+      internalID: -4930369570977921858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crab_Smile_1
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 375
+        width: 162
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6efd81c9d052b1280800000000000000
+      internalID: -9071616284024053786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crab_Smile_2
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 742
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b2162561b77c5830800000000000000
+      internalID: 4061252567771255479
       vertices: []
       indices: 
       edges: []

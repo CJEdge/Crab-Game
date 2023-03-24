@@ -14,6 +14,9 @@ namespace Project.Components
         [SerializeField]
         private PlayerMovementComponent pmc;
 
+        [SerializeField]
+        private GroundColliderComponent groundColliderComponent;
+
         #endregion
 
 
@@ -61,12 +64,12 @@ namespace Project.Components
         private void SetHeadAnimation()
         {
             //IDLE
-            if (pmc.IsGrounded && !pmc.IsSDownAttacking)
+            if (groundColliderComponent.IsGrounded && !pmc.IsSDownAttacking)
             {
                 headState = HeadState.Crab_Head_Idle;
             } 
             //JUMP
-            else if (!pmc.IsGrounded && !pmc.IsSDownAttacking)
+            else if (groundColliderComponent.IsGrounded && !pmc.IsSDownAttacking)
             {
                 headState = HeadState.Crab_Head_Jump;
             }
@@ -98,7 +101,7 @@ namespace Project.Components
                 clawState = ClawState.Crab_Claw_Up_Attack;
             }
             //DOWN ATTACK
-            else if(pmc.IsSDownAttacking && !pmc.IsUpAttacking && !pmc.IsSideAttacking)
+            else if(pmc.IsSDownAttacking)
             {
                 clawState = ClawState.Crab_Claw_Down_Attack;
                 pmc.IsSDownAttacking = true;

@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: b86910aff8a717447a1d5d6e8456e764
+guid: d88b924d1bd06fa41a31e2e9ea929bbb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 315393741751519643
-    second: Crab_Head_0
+      213: 7564139681329764904
+    second: Crab_Arm_Leg_0
   - first:
-      213: -4656385816827910881
-    second: Crab_Head_1
+      213: -3555120748010479091
+    second: Crab_Arm_Leg_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -93,29 +93,17 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Crab_Head_0
+      name: Crab_Arm_Leg_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1084
-        height: 649
+        x: 269
+        y: 373
+        width: 352
+        height: 169
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,8 +111,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b990b75efe0806400800000000000000
-      internalID: 315393741751519643
+      spriteID: 82ad811b6f839f860800000000000000
+      internalID: 7564139681329764904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crab_Arm_Leg_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 42
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d02e639f38ca9aec0800000000000000
+      internalID: -3555120748010479091
       vertices: []
       indices: 
       edges: []

@@ -35,9 +35,6 @@ namespace Project.Managers
         #endregion
 
         [SerializeField]
-        private GameObject menuMap;
-
-        [SerializeField]
         private GameObject gameMap;
 
         [SerializeField]
@@ -49,11 +46,16 @@ namespace Project.Managers
         [SerializeField]
         private PlayerInputManager playerInput;
 
+        [SerializeField]
+        private GameObject playerGameObject;
+
+        [SerializeField]
+        private int numberOfPlayers;
+
         #region Types
 
         public enum GameState
         {
-            MenuState,
             PreGameState,
             GameState,
             GameOverState
@@ -89,14 +91,6 @@ namespace Project.Managers
         {
             switch (gameState)
             {
-                case GameState.MenuState:
-                    if (!this.IsMenu)
-                    {
-                        StartCoroutine("HandleMenu");
-                        this.IsMenu = true;
-                    }
-                    //check if all players are on starting platform
-                    break;
                 case GameState.PreGameState:
                     if (!this.IsPreGame)
                     {
@@ -105,10 +99,6 @@ namespace Project.Managers
                     }
                     break;
                 case GameState.GameState:
-                    if (PlayerManager.Instance.PlayersAlive == 1)
-                    {
-                        gameState = GameState.GameOverState;                
-                    }
                         break;
                 case GameState.GameOverState:
                     if (!this.IsGameOver)
@@ -120,18 +110,11 @@ namespace Project.Managers
             }
         }
 
-        private IEnumerator HandleMenu()
-        {
-            gameMap.SetActive(false);
-            menuMap.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
-        }
-
         private IEnumerator HandlePreGame()
         {
             playerInput.DisableJoining();
-            menuMap.SetActive(false);
             gameMap.SetActive(true);
+            SpawnPlayers();
             PlayerManager.Instance.PlayersAlive = PlayerManager.Instance.players.Count;
             for (int i = 0; i < PlayerManager.Instance.players.Count; i++)
             {
@@ -139,13 +122,13 @@ namespace Project.Managers
                 PlayerManager.Instance.players[i].transform.position = startingPositions[i].position;
             }
             yield return new WaitForSeconds(5);
-            countdownText.text = "3";
+            //countdownText.text = "3";
             yield return new WaitForSeconds(1);
-            countdownText.text = "2";
+            //countdownText.text = "2";
             yield return new WaitForSeconds(1);
-            countdownText.text = "1";
+            //countdownText.text = "1";
             yield return new WaitForSeconds(1);
-            countdownText.text = "FIGHT";
+            //countdownText.text = "FIGHT";
             for (int i = 0; i < PlayerManager.Instance.players.Count; i++)
             {
                 PlayerManager.Instance.players[i].GetComponent<PlayerMovementComponent>().GameStarted = true;
@@ -160,9 +143,7 @@ namespace Project.Managers
             yield return new WaitForSeconds(3);
             //display text saying who won
             //reset relevent variables
-            gameState = GameState.MenuState;
             gameMap.SetActive(false);
-            menuMap.SetActive(true);
             Time.timeScale = 1;
             for (int i = 0; i < PlayerManager.Instance.players.Count; i++)
             {
@@ -175,7 +156,16 @@ namespace Project.Managers
 
         private void DisableFightText()
         {
-            countdownText.text = "";
+            //countdownText.text = "";
+        }
+
+        private void SpawnPlayers() {
+            if (playerGameObject == null) {
+                return;
+            }
+            for (int i = 0; i < numberOfPlayers; i++) {
+                Instantiate(playerGameObject, Vector3.zero, Quaternion.identity);
+            }
         }
     }
 }

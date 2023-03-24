@@ -39,17 +39,6 @@ namespace Project.Managers
 
         #region Serialized Fields
 
-        [SerializeField]
-        private GameObject[] playerTextGameObjects;
-
-        [SerializeField]
-        private GameObject[] frogHeadUi;
-
-        [SerializeField]
-        private TMP_Text[] playerReadyText;
-
-        [SerializeField]
-        private TMP_Text[] playerTexts;
 
         #endregion
 
@@ -90,7 +79,6 @@ namespace Project.Managers
             players.Add(player.gameObject);
             this.PlayersJoined++;
             this.PlayersAlive++;
-            StartCoroutine("PlayerJoinedText");
         }
 
         #endregion
@@ -98,17 +86,6 @@ namespace Project.Managers
 
         #region Coroutines
 
-        IEnumerator PlayerJoinedText()
-        {
-            int value = this.PlayersJoined - 1;
-            playerTextGameObjects[value].SetActive(true);
-            playerTexts[value].text = "Player " + (value + 1) + " " + "joined";
-            yield return new WaitForSeconds(1f);
-            playerTextGameObjects[value].SetActive(false);
-            yield return new WaitForSeconds(0.3f);
-            frogHeadUi[value].SetActive(true);
-            playerReadyText[value].text = "Not Ready";
-        }
 
         #endregion
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Run Load Scene
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 72, y: -120}
+  position: {x: 40, y: -120}
   ports:
     keys:
     - exitNode

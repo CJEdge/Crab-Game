@@ -5,10 +5,18 @@ using UnityEngine;
 namespace Project.Components {
     public class GroundColliderComponent : MonoBehaviour
     {
-        #region Serialized Fields
+        #region Properties
 
-        [SerializeField]
-        private PlayerMovementComponent playerMovementComponent;
+        public int CurrentCollisions {
+            get;
+            set;
+        }
+
+        public bool IsGrounded {
+            get {
+                return this.CurrentCollisions >= 1;
+            }
+        }
 
         #endregion
 
@@ -17,11 +25,11 @@ namespace Project.Components {
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            playerMovementComponent.IsGrounded = true;
+            this.CurrentCollisions++;
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
-            playerMovementComponent.IsGrounded = false;
+            this.CurrentCollisions--;
         }
 
         #endregion
