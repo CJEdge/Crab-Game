@@ -121,13 +121,13 @@ namespace Project.Managers
                 PlayerManager.Instance.players[i].GetComponent<PlayerMovementComponent>().GameStarted = false;
                 PlayerManager.Instance.players[i].transform.position = startingPositions[i].position;
             }
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(1);
             //countdownText.text = "3";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0);
             //countdownText.text = "2";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0);
             //countdownText.text = "1";
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0);
             //countdownText.text = "FIGHT";
             for (int i = 0; i < PlayerManager.Instance.players.Count; i++)
             {

@@ -22,6 +22,12 @@ namespace Project.Components
         [SerializeField]
         private float jumpPower;
 
+		[SerializeField]
+		private float maxJumpHoldTime;
+
+		[SerializeField]
+		private float jumpHoldMultiplier;
+
         #endregion
 
 
@@ -62,6 +68,18 @@ namespace Project.Components
             get;
             set;
         }
+
+		[field : SerializeField]
+		public bool JumpHeld {
+			get;
+			set;
+		} = false;
+
+		[field : SerializeField]
+		public float JumpHoldTime {
+			get;
+			set;
+		} = 0;
 
         #endregion
 
@@ -105,9 +123,12 @@ namespace Project.Components
             {
                 if (context.performed)
                 {
-                    rb.AddForce(new Vector2(0, jumpPower));
-                }
+					this.JumpHeld = true;
+				}
             }
+			if (context.canceled) {
+				this.JumpHeld = false;
+			}
         }
 
         public void OnSideAttack(InputAction.CallbackContext context)
@@ -137,6 +158,34 @@ namespace Project.Components
             this.IsSDownAttacking = context.performed;
         }
 
-        #endregion
-    }
+		#endregion
+
+
+		#region MonoBehaviours
+
+		public void Update() {
+			if (this.JumpHeld) {
+				this.JumpHoldTime += Time.deltaTime + jumpHoldMultiplier;
+				if (JumpHoldTime >= maxJumpHoldTime) {
+					this.JumpHeld = false;
+				}
+				else {
+					PerformJump();
+				}
+			}
+			else {
+				this.JumpHoldTime = 0;
+			}
+		}
+		#endregion
+
+		#region Private Methods
+
+		private void PerformJump() {
+			rb.velocity = new Vector2(rb.velocity.x, 0);
+			rb.velocity = new Vector2(0, jumpPower);
+			}
+
+		#endregion
+	}
 }

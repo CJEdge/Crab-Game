@@ -11,6 +11,9 @@ public class WobblyEyeComponent : MonoBehaviour
         [SerializeField]
         private bool inverted;
 
+		[SerializeField]
+		private float maxDistance;
+
         public Transform target; // the transform of the character's head
         public float stiffness = 200f; // how stiff the spring is
         public float damping = 20f; // how much the spring oscillations are damped
@@ -34,7 +37,11 @@ public class WobblyEyeComponent : MonoBehaviour
             force = -stiffness * displacement - damping * velocity;
             velocity += force / mass * Time.deltaTime;
             transform.localPosition += velocity * Time.deltaTime;
-            transform.rotation = target.rotation;
+			float clampedX = Mathf.Clamp(transform.localPosition.x, startingLocalPosition.x - maxDistance, startingLocalPosition.x + maxDistance);
+			float clampedY = Mathf.Clamp(transform.localPosition.y, startingLocalPosition.y - maxDistance, startingLocalPosition.y + maxDistance);
+			Vector3 clampedTransform = new Vector3( clampedX,clampedY,0);
+			transform.localPosition = clampedTransform;
+			transform.rotation = target.rotation;
         }
     }
 }

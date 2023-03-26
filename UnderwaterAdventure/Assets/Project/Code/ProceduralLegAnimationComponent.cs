@@ -36,10 +36,15 @@ namespace Project.Components {
         [SerializeField]
         private float raycastRange = 1.5f;
 
-        #endregion
+		[SerializeField]
+		private float recoveryTime = 0.2f;
 
+		#endregion
+		public float velocityThreshold = 2f;
+		public float rotationalForce = 100f;
+		private Vector2 previousVelocity; // Previous velocity of the object
 
-        private Vector2[] defaultLegPositions;
+		private Vector2[] defaultLegPositions;
         private Vector2[] lastLegPositions;
         private Vector2 lastBodyUp;
         private bool[] legMoving;
@@ -48,6 +53,7 @@ namespace Project.Components {
         private Vector2 velocity;
         private Vector2 lastVelocity;
         private Vector2 lastBodyPos;
+		private bool changingDirection = false;
 
         private float velocityMultiplier = 7f;
 
@@ -69,7 +75,7 @@ namespace Project.Components {
 
         void Start() {
             lastBodyUp = transform.up;
-
+			previousVelocity = rb.velocity;
             nbLegs = legTargets.Length;
             defaultLegPositions = new Vector2[nbLegs];
             lastLegPositions = new Vector2[nbLegs];
@@ -104,7 +110,7 @@ namespace Project.Components {
             }
             velocity = rb.velocity / 100f;
 
-            Vector2[] desiredPositions = new Vector2[nbLegs];
+			Vector2[] desiredPositions = new Vector2[nbLegs];
             int indexToMove = -1;
             float maxDistance = stepSize;
             for (int i = 0; i < nbLegs; ++i) {
@@ -141,7 +147,7 @@ namespace Project.Components {
             }
 
             lastBodyPos = transform.position;
-            if (nbLegs > 1 && bodyOrientation) {
+            if (nbLegs > 1 && bodyOrientation && !changingDirection) {
                 Vector2 v1 = (legTargets[1].position - legTargets[0].position).normalized;
 
                 Vector3 v2 = Vector3.back;
@@ -152,7 +158,22 @@ namespace Project.Components {
 				ClampRotation(rotation);
                 lastBodyUp = transform.up;
             }
-        }
+
+			Vector2 deltaVelocity = rb.velocity - previousVelocity;
+			if (deltaVelocity.magnitude > velocityThreshold) {
+				changingDirection = true;
+				float rotationalForceValue = Mathf.Sign(deltaVelocity.x) * rotationalForce;
+				Debug.Log(Mathf.Sign(deltaVelocity.x));
+				float targetRotation = transform.rotation.z + rotationalForceValue;
+				float newRotation = Mathf.Lerp(transform.rotation.z, targetRotation, Time.deltaTime);
+				Quaternion rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.x, newRotation);
+				ClampRotation(rotation);
+			}
+			else {
+				changingDirection = false;
+			}
+			previousVelocity = rb.velocity;
+		}
 
         private void OnDrawGizmosSelected() {
             for (int i = 0; i < nbLegs; ++i) {
