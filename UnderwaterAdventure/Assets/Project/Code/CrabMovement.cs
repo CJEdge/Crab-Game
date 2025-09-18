@@ -22,14 +22,14 @@ using UnityEngine;
         // Horizontal movement
         float horizontalInput = Input.GetAxis("Horizontal");
         float xVelocity = horizontalInput * speed;
-        rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+        rb.linearVelocity = new Vector2(xVelocity, rb.linearVelocity.y);
 
         // Slope handling
         if (isGrounded && Mathf.Abs(groundNormal.x) > 0.1f) {
             float slopeAngle = Mathf.Atan2(groundNormal.y, groundNormal.x) * Mathf.Rad2Deg;
             if (Mathf.Abs(slopeAngle) > maxSlopeHeight) {
                 float slopeDirection = Mathf.Sign(horizontalInput);
-                rb.velocity = new Vector2(speed * slopeDirection, rb.velocity.y);
+                rb.linearVelocity = new Vector2(speed * slopeDirection, rb.linearVelocity.y);
             }
         }
 

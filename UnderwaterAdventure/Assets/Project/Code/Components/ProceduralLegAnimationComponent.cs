@@ -75,7 +75,7 @@ namespace Project.Components {
 
         void Start() {
             lastBodyUp = transform.up;
-			previousVelocity = rb.velocity;
+			previousVelocity = rb.linearVelocity;
             nbLegs = legTargets.Length;
             defaultLegPositions = new Vector2[nbLegs];
             lastLegPositions = new Vector2[nbLegs];
@@ -104,11 +104,11 @@ namespace Project.Components {
         void FixedUpdate() {
 
             if (!groundColliderComponent.IsGrounded) {
-				Quaternion rotation = Quaternion.Euler(0f, 0f, rb.velocity.x * -airRotationSpeed * Time.deltaTime);
+				Quaternion rotation =  Quaternion.Euler(0f, 0f, rb.linearVelocity.x * -airRotationSpeed * Time.deltaTime);
 				ClampRotation(rotation);
 				return;
             }
-            velocity = rb.velocity / 100f;
+            velocity = rb.linearVelocity / 100f;
 
 			Vector2[] desiredPositions = new Vector2[nbLegs];
             int indexToMove = -1;
@@ -159,11 +159,10 @@ namespace Project.Components {
                 lastBodyUp = transform.up;
             }
 
-			Vector2 deltaVelocity = rb.velocity - previousVelocity;
+			Vector2 deltaVelocity = rb.linearVelocity - previousVelocity;
 			if (deltaVelocity.magnitude > velocityThreshold) {
 				changingDirection = true;
 				float rotationalForceValue = Mathf.Sign(deltaVelocity.x) * rotationalForce;
-				Debug.Log(Mathf.Sign(deltaVelocity.x));
 				float targetRotation = transform.rotation.z + rotationalForceValue;
 				float newRotation = Mathf.Lerp(transform.rotation.z, targetRotation, Time.deltaTime);
 				Quaternion rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.x, newRotation);
@@ -172,7 +171,7 @@ namespace Project.Components {
 			else {
 				changingDirection = false;
 			}
-			previousVelocity = rb.velocity;
+			previousVelocity = rb.linearVelocity;
 		}
 
         private void OnDrawGizmosSelected() {
@@ -193,7 +192,7 @@ namespace Project.Components {
 			else {
 				playerEulerAngles.z = playerEulerAngles.z;
 			}
-			playerEulerAngles.z = Mathf.Clamp(playerEulerAngles.z, -15f, 15f);
+			playerEulerAngles.z = Mathf.Clamp(playerEulerAngles.z, -45f, 45f);
 			transform.rotation = Quaternion.Euler(playerEulerAngles);
 		}
     }

@@ -31,7 +31,7 @@ public class WobblyEyeComponent : MonoBehaviour
 
         void Update() {
             int invert = inverted ? 1 : -1;
-            Vector2 targetVelocity = -rb.velocity;
+            Vector2 targetVelocity = -rb.linearVelocity;
             Vector3 targetPosition = startingLocalPosition + new Vector3(targetVelocity.x, targetVelocity.y, 0f) / 10f;
             Vector3 displacement = transform.localPosition + (invert * targetPosition);
             force = -stiffness * displacement - damping * velocity;

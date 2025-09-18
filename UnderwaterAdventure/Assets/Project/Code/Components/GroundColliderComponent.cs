@@ -5,18 +5,52 @@ using UnityEngine;
 namespace Project.Components {
     public class GroundColliderComponent : MonoBehaviour
     {
-        #region Properties
+		#region Serialized Fields
 
-        public int CurrentCollisions {
+		[SerializeField]
+		private Rigidbody2D rb;
+
+		[SerializeField]
+		private PlayerMovementComponent playerMovementComponent;
+
+		[SerializeField]
+		private float coyoteTime = 0.05f;
+
+		[SerializeField]
+		private float jumpQueueDistance = 0.2f;
+
+		#endregion
+
+
+		#region Properties
+
+		public int CurrentCollisions {
             get;
             set;
         }
 
+		public bool CollidingWithGround {
+			get {
+				return this.CurrentCollisions >= 1;
+			}
+		}
+
         public bool IsGrounded {
-            get {
-                return this.CurrentCollisions >= 1;
-            }
+			get {
+				return CoyoteTimeCounter < coyoteTime;
+				}
         }
+
+		public float CoyoteTimeCounter {
+			get;
+			set;
+		} = 0;
+
+		[field : SerializeField]
+		public bool JumpQueued {
+			get;
+			set;
+		}
 
         #endregion
 
@@ -32,6 +66,20 @@ namespace Project.Components {
             this.CurrentCollisions--;
         }
 
-        #endregion
-    }
+		#endregion
+
+
+		#region MonoBehaviours
+
+		private void Update() {
+			if (this.CollidingWithGround) {
+				this.CoyoteTimeCounter = 0f;
+			}
+			else {
+				this.CoyoteTimeCounter += Time.deltaTime;
+			}
+		}
+
+		#endregion
+	}
 }

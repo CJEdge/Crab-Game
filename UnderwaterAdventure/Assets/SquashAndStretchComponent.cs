@@ -28,7 +28,7 @@ public class SquashAndStretchComponent : MonoBehaviour
 
     void Update() {
         // Get the absolute value of the object's velocity
-        Vector2 velocity = rb.velocity;
+        Vector2 velocity = rb.linearVelocity;
         float xVelocity = Mathf.Abs(velocity.x);
         float yVelocity = Mathf.Abs(velocity.y);
 

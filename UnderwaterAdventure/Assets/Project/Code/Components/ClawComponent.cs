@@ -35,12 +35,12 @@ namespace Project.Components
                     return;
                 case PlayerAnimationComponent.ClawState.Crab_Claw_Side_Attack:
                     float direction = transform.position.x > collision.transform.position.x ? -1 : 1;
-                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                     rb.AddForce(new Vector2(direction * knockbackPower, 0));
                     return;
                 case PlayerAnimationComponent.ClawState.Crab_Claw_Up_Attack:
                     direction = transform.position.y > collision.transform.position.x ? -1 : 1;
-                    rb.velocity = new Vector2(rb.velocity.x, 0);
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
                     rb.AddForce(new Vector2(0, direction * knockbackPower/3));
                     return;
             }

@@ -20,9 +20,11 @@ namespace Project.Views {
             set;
         }
 
-        #endregion
+		public override GameObject FirstSelected => throw new System.NotImplementedException();
 
-        public override void CleanupButtonListeners() {
+		#endregion
+
+		public override void CleanupButtonListeners() {
             continueButton.onClick.RemoveAllListeners();
         }
 

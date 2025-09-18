@@ -119,7 +119,7 @@ namespace Project.Managers
             for (int i = 0; i < PlayerManager.Instance.players.Count; i++)
             {
                 PlayerManager.Instance.players[i].GetComponent<PlayerMovementComponent>().GameStarted = false;
-                PlayerManager.Instance.players[i].transform.position = startingPositions[i].position;
+                //PlayerManager.Instance.players[i].transform.position = startingPositions[i].position;
             }
             yield return new WaitForSeconds(1);
             //countdownText.text = "3";

@@ -16,6 +16,9 @@ namespace Project.Components
         [SerializeField]
         private GroundColliderComponent groundColliderComponent;
 
+		[SerializeField]
+		private GameObject graphics;
+
         [SerializeField]
         private float moveSpeed;
 
@@ -81,6 +84,12 @@ namespace Project.Components
 			set;
 		} = 0;
 
+		[field : SerializeField]
+		public bool CanJump {
+			get;
+			set;
+		}
+
         #endregion
 
 
@@ -119,13 +128,11 @@ namespace Project.Components
             {
                 return;
             }
-            if (groundColliderComponent.IsGrounded)
-            {
-                if (context.performed)
-                {
-					this.JumpHeld = true;
-				}
-            }
+
+            if (context.performed) {
+				this.JumpHeld = true;
+			}
+
 			if (context.canceled) {
 				this.JumpHeld = false;
 			}
@@ -165,15 +172,20 @@ namespace Project.Components
 
 		public void Update() {
 			if (this.JumpHeld) {
-				this.JumpHoldTime += Time.deltaTime + jumpHoldMultiplier;
+				this.JumpHoldTime += Time.deltaTime * jumpHoldMultiplier;
 				if (JumpHoldTime >= maxJumpHoldTime) {
-					this.JumpHeld = false;
+					CanJump = false;
 				}
 				else {
 					PerformJump();
 				}
 			}
 			else {
+				this.JumpHoldTime = 0;
+				this.CanJump = false;
+			}
+			if (groundColliderComponent.IsGrounded) {
+				this.CanJump = true;
 				this.JumpHoldTime = 0;
 			}
 		}
@@ -182,9 +194,11 @@ namespace Project.Components
 		#region Private Methods
 
 		private void PerformJump() {
-			rb.velocity = new Vector2(rb.velocity.x, 0);
-			rb.velocity = new Vector2(0, jumpPower);
+			if ((groundColliderComponent.IsGrounded || this.JumpHoldTime <= maxJumpHoldTime) && this.CanJump) {
+				rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
+				rb.AddForce( graphics.transform.up * jumpPower);
 			}
+		}
 
 		#endregion
 	}
